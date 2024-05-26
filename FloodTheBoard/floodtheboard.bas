@@ -449,6 +449,7 @@ Function mousezone% (x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
     End If
 End Function
 
+'thanks to bplus for the algorithm, from here: https://qb64.boards.net/thread/267/floodfill-recursive-algorithm
 Sub floodfill (fill) ' needs max, min functions mod of my Paint3 sub
     Dim fillColor, W, H, parentF, tick, ystart, ystop, xstart, xstop, x, y
     fillColor = level(1, 1)
