@@ -1,1 +1,1 @@
-This is just a Flood It clone implemented in QB64pe.
+This is a Flood It clone implemented in QB64pe.
