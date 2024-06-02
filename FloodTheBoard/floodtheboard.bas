@@ -15,7 +15,7 @@ $Embed:'./assets/game_over_1.mp3','gameoversound'
 $ExeIcon:'./icon.ico'
 Randomize Timer
 
-Title "Flood the Board - Press [F11] to toggle fullscreen"
+Title "Flood the Board - Press [F] to toggle fullscreen"
 
 Dim Shared arrow&, tileset&, pointer&, background&, titlescreen&, bigfont&, smallfont&, middlefont&, mx%, my%, mb%, xoffset%, yoffset%, maxmoves%, columns%, rows%
 Dim Shared success%, arrowx%, moves%, arcolor%, arrowspeed%, iconimage&
@@ -380,7 +380,7 @@ Sub showaboutscreen
         Color RGB32(255, 50, 50)
         PrintString (50, 490), "Made by Markus Mangold 2024 with QB64 Phoenix Edition"
         Color RGB32(238, 238, 27)
-        PrintString (50, 550), "Press [F11] to toggle fullscreen"
+        PrintString (50, 550), "Press [F] to toggle fullscreen"
 
         Font middlefont&
         If mousezone(510, 600, 870, 670) = TRUE Then
@@ -492,7 +492,7 @@ Function min (n1, n2)
 End Function
 
 Sub checkfunctionkey
-    If KeyHit = 34048 Then
+    If InKey$ = LCase$("f") Then
         If FullScreen = 0 Then
             FullScreen Stretch , Smooth
         Else
@@ -514,7 +514,7 @@ Sub freetheram
     FreeFont bigfont&
     FreeFont smallfont&
     FreeFont middlefont&
-    
+
     SndClose music&
     SndClose sndconfirm&
     SndClose selectsnd&
