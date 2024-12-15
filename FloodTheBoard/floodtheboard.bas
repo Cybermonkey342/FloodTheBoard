@@ -1,5 +1,5 @@
 '$Include: 'pulsartop.bi'
-$NoPrefix
+'$NoPrefix removed here
 $Embed:'./assets/pointer.png','pointer'
 $Embed:'./assets/backgroundm3.png','background'
 $Embed:'./assets/tiles.png','tiles'
@@ -15,16 +15,16 @@ $Embed:'./assets/game_over_1.mp3','gameoversound'
 $ExeIcon:'./icon.ico'
 Randomize Timer
 
-Title "Flood the Board - Press [F] to toggle fullscreen"
+_Title "Flood the Board - Press [F] to toggle fullscreen"
 
 Dim Shared arrow&, tileset&, pointer&, background&, titlescreen&, bigfont&, smallfont&, middlefont&, mx%, my%, mb%, xoffset%, yoffset%, maxmoves%, columns%, rows%
 Dim Shared success%, arrowx%, moves%, arcolor%, arrowspeed%, iconimage&
 Dim Shared exitgame%, click%, music&, selectsnd&, sndconfirm&, sndwin&, sndgameover&
 Dim Shared playonce%(1 To 5)
 
-Const BROWNCHOICE = RGB32(155, 105, 0)
-Const BTNGRAY = RGB32(190, 190, 190)
-Const BTNWHITE = RGB32(230, 230, 230)
+Const BROWNCHOICE = _RGB32(155, 105, 0)
+Const BTNGRAY = _RGB32(190, 190, 190)
+Const BTNWHITE = _RGB32(230, 230, 230)
 Const ARWHITE = 0
 Const ARBLUE = 1
 Const ARPINK = 2
@@ -38,26 +38,26 @@ Const WINSCREEN = 3
 Const EXITPRG = 4
 Const GOBACK = 5
 
-iconimage& = LoadImage(_Embedded$("prgicon"), 32, "memory")
-pointer& = LoadImage(_Embedded$("pointer"), 33, "memory")
-background& = LoadImage(_Embedded$("background"), 32, "memory")
-tileset& = LoadImage(_Embedded$("tiles"), 33, "memory")
-arrow& = LoadImage(_Embedded$("arrow"), 33, "memory")
-titlescreen& = LoadImage(_Embedded$("title"), 32, "memory")
-music& = SndOpen(_Embedded$("musica"), "memory")
-selectsnd& = SndOpen(_Embedded$("selectsound"), "memory")
-sndconfirm& = SndOpen(_Embedded$("confirmsound"), "memory")
-sndwin& = SndOpen(_Embedded$("winningsound"), "memory")
-sndgameover& = SndOpen(_Embedded$("gameoversound"), "memory")
-bigfont& = LoadFont(_Embedded$("thefont"), 78, "memory")
-smallfont& = LoadFont(_Embedded$("thefont"), 24, "memory")
-middlefont& = LoadFont(_Embedded$("thefont"), 48, "memory")
+iconimage& = _LoadImage(_Embedded$("prgicon"), 32, "memory")
+pointer& = _LoadImage(_Embedded$("pointer"), 33, "memory")
+background& = _LoadImage(_Embedded$("background"), 32, "memory")
+tileset& = _LoadImage(_Embedded$("tiles"), 33, "memory")
+arrow& = _LoadImage(_Embedded$("arrow"), 33, "memory")
+titlescreen& = _LoadImage(_Embedded$("title"), 32, "memory")
+music& = _SndOpen(_Embedded$("musica"), "memory")
+selectsnd& = _SndOpen(_Embedded$("selectsound"), "memory")
+sndconfirm& = _SndOpen(_Embedded$("confirmsound"), "memory")
+sndwin& = _SndOpen(_Embedded$("winningsound"), "memory")
+sndgameover& = _SndOpen(_Embedded$("gameoversound"), "memory")
+bigfont& = _LoadFont(_Embedded$("thefont"), 78, "memory")
+smallfont& = _LoadFont(_Embedded$("thefont"), 24, "memory")
+middlefont& = _LoadFont(_Embedded$("thefont"), 48, "memory")
 
-Screen NewImage(1366, 768, 32)
-ScreenMove 0 + _Width / 4, 0 + _Height / 4
-Icon iconimage&
-PrintMode KeepBackground
-MouseHide
+Screen _NewImage(1366, 768, 32)
+_ScreenMove 0 + _Width / 4, 0 + _Height / 4
+_Icon iconimage&
+_PrintMode _KeepBackground
+_MouseHide
 columns% = 14
 rows% = 14
 Dim Shared level(1 To columns%, 1 To rows%) As Integer
@@ -81,28 +81,28 @@ Do
     For i = 1 To 5
         playonce%(i) = 0
     Next
-    SndVol music&, 0.5
-    SndVol selectsnd&, 0.75
-    SndVol sndconfirm&, 1.0
-    SndVol sndwin&&, 1.0
-    SndVol sndgameover&&, 1.0
-    SndLoop music&
+    _SndVol music&, 0.5
+    _SndVol selectsnd&, 0.75
+    _SndVol sndconfirm&, 1.0
+    _SndVol sndwin&&, 1.0
+    _SndVol sndgameover&&, 1.0
+    _SndLoop music&
     showtitlescreen
     ' ------------- Main loop starts here ----------------------------------
-    If SndPlaying(music&) Then
-        SndPause music&
+    If _SndPlaying(music&) Then
+        _SndPause music&
     End If
     Do
-        Limit 80
+        _Limit 80
         Cls
-        PutImage (0, 0), background&
+        _PutImage (0, 0), background&
         Do While _MouseInput
             mx% = _MouseX: my% = _MouseY: mb% = _MouseButton(1)
         Loop
         colorchoice
         drawlevel
         drawarrow
-        PutImage (mx%, my%), pointer&
+        _PutImage (mx%, my%), pointer&
         frame% = frame% + 1
         If frame% = 30 Then frame% = 0
         If frame% Mod 2 = 0 Then
@@ -112,7 +112,7 @@ Do
         End If
         arcolor% = ARWHITE
         checkfunctionkey
-        Display
+        _Display
         If success% = TRUE Then
             showcongratulations
             exitgame% = TRUE
@@ -183,68 +183,68 @@ Sub colorchoice
     RotoZoomImage 1100 + 40, 330 + 40, tileset&, 120, 0, 120 + 40, 40, 2, 0
     RotoZoomImage 900 + 40, 480 + 40, tileset&, 160, 0, 160 + 40, 40, 2, 0
     RotoZoomImage 1100 + 40, 480 + 40, tileset&, 200, 0, 200 + 40, 40, 2, 0
-    Font middlefont&
-    Color RGB32(10, 15, 200)
-    PrintString (823, 63), "Moves left:" + Str$(maxmoves% - moves%)
-    Color RGB32(158, 158, 227)
-    PrintString (820, 60), "Moves left:" + Str$(maxmoves% - moves%)
+    _Font middlefont&
+    Color _RGB32(10, 15, 200)
+    _PrintString (823, 63), "Moves left:" + Str$(maxmoves% - moves%)
+    Color _RGB32(158, 158, 227)
+    _PrintString (820, 60), "Moves left:" + Str$(maxmoves% - moves%)
 End Sub
 
 Sub showtitlescreen
     startgame% = FALSE
     Do
-        Limit 60
+        _Limit 60
         Cls
         Do While _MouseInput
             mx% = _MouseX: my% = _MouseY: mb% = _MouseButton(1)
         Loop
-        PutImage (0, 0), titlescreen&
-        Color RGB32(10, 15, 200)
-        Font bigfont&
-        PrintString (345, 55), "Flood the Board"
-        Color RGB32(158, 158, 227)
-        PrintString (340, 50), "Flood the Board"
-        Font middlefont&
+        _PutImage (0, 0), titlescreen&
+        Color _RGB32(10, 15, 200)
+        _Font bigfont&
+        _PrintString (345, 55), "Flood the Board"
+        Color _RGB32(158, 158, 227)
+        _PrintString (340, 50), "Flood the Board"
+        _Font middlefont&
         If mousezone(510, 200, 870, 270) = TRUE Then
             If playonce%(NEWGAME) = 0 Then
                 playonce%(NEWGAME) = 1
-                SndPlay selectsnd&
+                _SndPlay selectsnd&
             End If
             Line (505, 195)-(875, 275), BROWNCHOICE, BF
             If mb% Then
-                SndPlay sndconfirm&
+                _SndPlay sndconfirm&
                 startgame% = TRUE
             End If
         End If
         Line (510, 200)-(870, 235), BTNWHITE, BF
         Line (510, 235)-(870, 270), BTNGRAY, BF
-        Color RGB32(10, 15, 200)
-        PrintString (540, 215), "New Game"
+        Color _RGB32(10, 15, 200)
+        _PrintString (540, 215), "New Game"
         If mousezone(510, 200, 870, 270) = FALSE Then
             playonce%(NEWGAME) = 0
         End If
         If mousezone(510, 300, 870, 370) = TRUE Then
             If playonce%(ABOUT) = 0 Then
                 playonce%(ABOUT) = 1
-                SndPlay selectsnd&
+                _SndPlay selectsnd&
             End If
             Line (505, 295)-(875, 375), BROWNCHOICE, BF
             If mb% Then
-                SndPlay sndconfirm&
+                _SndPlay sndconfirm&
                 showaboutscreen
             End If
         End If
         Line (510, 300)-(870, 335), BTNWHITE, BF
         Line (510, 335)-(870, 370), BTNGRAY, BF
-        Color RGB32(10, 15, 200)
-        PrintString (600, 315), "About"
+        Color _RGB32(10, 15, 200)
+        _PrintString (600, 315), "About"
         If mousezone(510, 300, 870, 370) = FALSE Then
             playonce%(ABOUT) = 0
         End If
         If mousezone(510, 400, 870, 470) = TRUE Then
             If playonce%(EXITPRG) = 0 Then
                 playonce%(EXITPRG) = 1
-                SndPlay selectsnd&
+                _SndPlay selectsnd&
             End If
             Line (505, 395)-(875, 475), BROWNCHOICE, BF
             If mb% Then
@@ -254,156 +254,156 @@ Sub showtitlescreen
         End If
         Line (510, 400)-(870, 435), BTNWHITE, BF
         Line (510, 435)-(870, 470), BTNGRAY, BF
-        Color RGB32(10, 15, 200)
-        PrintString (550, 415), "Exit Game"
+        Color _RGB32(10, 15, 200)
+        _PrintString (550, 415), "Exit Game"
         If mousezone(510, 400, 870, 470) = FALSE Then
             playonce%(EXITPRG) = 0
         End If
-        PutImage (mx%, my%), pointer&
+        _PutImage (mx%, my%), pointer&
         checkfunctionkey
-        Display
+        _Display
     Loop Until startgame% = TRUE
 End Sub
 
 Sub showgameover
-    SndPlay sndgameover&
+    _SndPlay sndgameover&
     back% = FALSE
     Do
-        Limit 60
+        _Limit 60
         Cls
         Do While _MouseInput
             mx% = _MouseX: my% = _MouseY: mb% = _MouseButton(1)
         Loop
-        PutImage (0, 0), titlescreen&
-        Font bigfont&
-        Color RGB32(15, 10, 200)
-        PrintString (435, 55), "Game Over"
-        Color RGB32(158, 158, 227)
-        PrintString (430, 50), "Game Over"
-        Font middlefont&
-        Color RGB32(BROWNCHOICE)
-        PrintString (373, 233), "Sorry, no moves left!"
-        Color RGB32(238, 238, 27)
-        PrintString (370, 230), "Sorry, no moves left!"
+        _PutImage (0, 0), titlescreen&
+        _Font bigfont&
+        Color _RGB32(15, 10, 200)
+        _PrintString (435, 55), "Game Over"
+        Color _RGB32(158, 158, 227)
+        _PrintString (430, 50), "Game Over"
+        _Font middlefont&
+        Color _RGB32(BROWNCHOICE)
+        _PrintString (373, 233), "Sorry, no moves left!"
+        Color _RGB32(238, 238, 27)
+        _PrintString (370, 230), "Sorry, no moves left!"
         If mousezone(510, 600, 870, 670) = TRUE Then
             If playonce%(GOBACK) = 0 Then
                 playonce%(GOBACK) = 1
-                SndPlay selectsnd&
+                _SndPlay selectsnd&
             End If
             Line (505, 595)-(875, 675), BROWNCHOICE, BF
             If mb% Then
-                SndPlay sndconfirm&
+                _SndPlay sndconfirm&
                 back% = TRUE
             End If
         End If
         Line (510, 600)-(870, 635), BTNWHITE, BF
         Line (510, 635)-(870, 670), BTNGRAY, BF
-        Color RGB32(10, 15, 200)
-        PrintString (610, 615), "Back"
+        Color _RGB32(10, 15, 200)
+        _PrintString (610, 615), "Back"
         If mousezone(510, 600, 870, 670) = FALSE Then
             playonce%(GOBACK) = 0
         End If
-        PutImage (mx%, my%), pointer&
+        _PutImage (mx%, my%), pointer&
         checkfunctionkey
-        Display
+        _Display
     Loop Until back% = TRUE
 End Sub
 
 Sub showcongratulations
     back% = FALSE
-    SndPlay sndwin&
+    _SndPlay sndwin&
     Do
-        Limit 60
+        _Limit 60
         Cls
         Do While _MouseInput
             mx% = _MouseX: my% = _MouseY: mb% = _MouseButton(1)
         Loop
-        PutImage (0, 0), titlescreen&
-        Font bigfont&
-        Color RGB32(15, 10, 200)
-        PrintString (305, 55), "Congratulations!"
-        Color RGB32(158, 158, 227)
-        PrintString (300, 50), "Congratulations!"
-        Font middlefont&
-        Color RGB32(BROWNCHOICE)
+        _PutImage (0, 0), titlescreen&
+        _Font bigfont&
+        Color _RGB32(15, 10, 200)
+        _PrintString (305, 55), "Congratulations!"
+        Color _RGB32(158, 158, 227)
+        _PrintString (300, 50), "Congratulations!"
+        _Font middlefont&
+        Color _RGB32(BROWNCHOICE)
         'MessageBox "Congratulations!", "You win with " + Str$(moves%) + " moves!"
-        PrintString (353, 233), "You win with " + Str$(moves%) + " moves!"
-        Color RGB32(238, 238, 27)
-        PrintString (350, 230), "You win with " + Str$(moves%) + " moves!"
+        _PrintString (353, 233), "You win with " + Str$(moves%) + " moves!"
+        Color _RGB32(238, 238, 27)
+        _PrintString (350, 230), "You win with " + Str$(moves%) + " moves!"
         If mousezone(510, 600, 870, 670) = TRUE Then
             If playonce%(GOBACK) = 0 Then
                 playonce%(GOBACK) = 1
-                SndPlay selectsnd&
+                _SndPlay selectsnd&
             End If
             Line (505, 595)-(875, 675), BROWNCHOICE, BF
             If mb% Then
-                SndPlay sndconfirm&
+                _SndPlay sndconfirm&
                 back% = TRUE
             End If
         End If
         Line (510, 600)-(870, 635), BTNWHITE, BF
         Line (510, 635)-(870, 670), BTNGRAY, BF
-        Color RGB32(10, 15, 200)
-        PrintString (610, 615), "Back"
+        Color _RGB32(10, 15, 200)
+        _PrintString (610, 615), "Back"
         If mousezone(510, 600, 870, 670) = FALSE Then
             playonce%(GOBACK) = 0
         End If
-        PutImage (mx%, my%), pointer&
+        _PutImage (mx%, my%), pointer&
         checkfunctionkey
-        Display
+        _Display
     Loop Until back% = TRUE
 End Sub
 
 Sub showaboutscreen
     back% = FALSE
     Do
-        Limit 60
+        _Limit 60
         Cls
         Do While _MouseInput
             mx% = _MouseX: my% = _MouseY: mb% = _MouseButton(1)
         Loop
-        PutImage (0, 0), titlescreen&
-        Font bigfont&
-        Color RGB32(15, 10, 200)
-        PrintString (555, 55), "About"
-        Color RGB32(158, 158, 227)
-        PrintString (550, 50), "About"
-        Font smallfont&
-        Color RGB32(238, 238, 27)
-        PrintString (50, 230), "Welcome to 'Flood the Board'"
-        PrintString (50, 260), "The goal of the game is simple:"
-        PrintString (50, 290), "Flood the entire board with a single color in the fewest number of moves possible."
-        PrintString (50, 330), "Start by selecting a color on the edge of the board, and watch as the color spreads,"
-        PrintString (50, 360), "changing adjacent tiles to match."
-        PrintString (50, 400), "Strategically plan your moves to conquer the board"
-        PrintString (50, 430), "and achieve the ultimate flood domination!"
-        Color RGB32(255, 50, 50)
-        PrintString (50, 490), "Made by Markus Mangold 2024 with QB64 Phoenix Edition"
-        Color RGB32(238, 238, 27)
-        PrintString (50, 550), "Press [F] to toggle fullscreen"
+        _PutImage (0, 0), titlescreen&
+        _Font bigfont&
+        Color _RGB32(15, 10, 200)
+        _PrintString (555, 55), "About"
+        Color _RGB32(158, 158, 227)
+        _PrintString (550, 50), "About"
+        _Font smallfont&
+        Color _RGB32(238, 238, 27)
+        _PrintString (50, 230), "Welcome to 'Flood the Board'"
+        _PrintString (50, 260), "The goal of the game is simple:"
+        _PrintString (50, 290), "Flood the entire board with a single color in the fewest number of moves possible."
+        _PrintString (50, 330), "Start by selecting a color on the edge of the board, and watch as the color spreads,"
+        _PrintString (50, 360), "changing adjacent tiles to match."
+        _PrintString (50, 400), "Strategically plan your moves to conquer the board"
+        _PrintString (50, 430), "and achieve the ultimate flood domination!"
+        Color _RGB32(255, 50, 50)
+        _PrintString (50, 490), "Made by Markus Mangold 2024 with QB64 Phoenix Edition"
+        Color _RGB32(238, 238, 27)
+        _PrintString (50, 550), "Press [F] to toggle fullscreen"
 
-        Font middlefont&
+        _Font middlefont&
         If mousezone(510, 600, 870, 670) = TRUE Then
             If playonce%(GOBACK) = 0 Then
                 playonce%(GOBACK) = 1
-                SndPlay selectsnd&
+                _SndPlay selectsnd&
             End If
             Line (505, 595)-(875, 675), BROWNCHOICE, BF
             If mb% Then
-                SndPlay sndconfirm&
+                _SndPlay sndconfirm&
                 back% = TRUE
             End If
         End If
         Line (510, 600)-(870, 635), BTNWHITE, BF
         Line (510, 635)-(870, 670), BTNGRAY, BF
-        Color RGB32(10, 15, 200)
-        PrintString (610, 615), "Back"
+        Color _RGB32(10, 15, 200)
+        _PrintString (610, 615), "Back"
         If mousezone(510, 600, 870, 670) = FALSE Then
             playonce%(GOBACK) = 0
         End If
-        PutImage (mx%, my%), pointer&
+        _PutImage (mx%, my%), pointer&
         checkfunctionkey
-        Display
+        _Display
     Loop Until back% = TRUE
 End Sub
 
@@ -413,12 +413,12 @@ Sub drawlevel
         For y% = 1 To rows%
             leveltile% = level(x%, y%)
             Select Case leveltile%
-                Case 1: PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (0, 0)-(40, 40)
-                Case 2: PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (40, 0)-(80, 40)
-                Case 3: PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (80, 0)-(80 + 40, 40)
-                Case 4: PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (120, 0)-(120 + 40, 40)
-                Case 5: PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (160, 0)-(160 + 40, 40)
-                Case 6: PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (200, 0)-(200 + 40, 40)
+                Case 1: _PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (0, 0)-(40, 40)
+                Case 2: _PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (40, 0)-(80, 40)
+                Case 3: _PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (80, 0)-(80 + 40, 40)
+                Case 4: _PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (120, 0)-(120 + 40, 40)
+                Case 5: _PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (160, 0)-(160 + 40, 40)
+                Case 6: _PutImage ((x% - 1) * 40 + xoffset%, (y% - 1) * 40 + yoffset%), tileset&, , (200, 0)-(200 + 40, 40)
             End Select
             If level(x%, y%) <> level(1, 1) Then success% = FALSE
         Next
@@ -431,13 +431,13 @@ End Sub
 
 Sub drawarrow
     Select Case arcolor%
-        Case ARWHITE: PutImage (arrowx% - 20, 95), arrow&, , (0, 0)-(39, 39)
-        Case ARBLUE: PutImage (arrowx% - 20, 95), arrow&, , (39, 0)-(79, 39)
-        Case ARPINK: PutImage (arrowx% - 20, 95), arrow&, , (79, 0)-(119, 39)
-        Case ARORANGE: PutImage (arrowx% - 20, 95), arrow&, , (119, 0)-(159, 39)
-        Case ARYELLOW: PutImage (arrowx% - 20, 95), arrow&, , (159, 0)-(199, 39)
-        Case ARGREEN: PutImage (arrowx% - 20, 95), arrow&, , (199, 0)-(239, 39)
-        Case ARGRAY: PutImage (arrowx% - 20, 95), arrow&, , (239, 0)-(279, 39)
+        Case ARWHITE: _PutImage (arrowx% - 20, 95), arrow&, , (0, 0)-(39, 39)
+        Case ARBLUE: _PutImage (arrowx% - 20, 95), arrow&, , (39, 0)-(79, 39)
+        Case ARPINK: _PutImage (arrowx% - 20, 95), arrow&, , (79, 0)-(119, 39)
+        Case ARORANGE: _PutImage (arrowx% - 20, 95), arrow&, , (119, 0)-(159, 39)
+        Case ARYELLOW: _PutImage (arrowx% - 20, 95), arrow&, , (159, 0)-(199, 39)
+        Case ARGREEN: _PutImage (arrowx% - 20, 95), arrow&, , (199, 0)-(239, 39)
+        Case ARGRAY: _PutImage (arrowx% - 20, 95), arrow&, , (239, 0)-(279, 39)
     End Select
 End Sub
 
@@ -493,33 +493,33 @@ End Function
 
 Sub checkfunctionkey
     If InKey$ = LCase$("f") Then
-        If FullScreen = 0 Then
-            FullScreen Stretch , Smooth
+        If _FullScreen = 0 Then
+            _FullScreen _Stretch , _Smooth
         Else
-            FullScreen Off
+            _FullScreen _Off
         End If
     End If
 End Sub
 
 Sub freetheram
-    MouseShow
-    Font 16
-    FreeImage pointer&
-    FreeImage background&
-    FreeImage tileset&
-    FreeImage arrow&
-    FreeImage iconimage&
-    FreeImage titlescreen&
+    _MouseShow
+    _Font 16
+    _FreeImage pointer&
+    _FreeImage background&
+    _FreeImage tileset&
+    _FreeImage arrow&
+    _FreeImage iconimage&
+    _FreeImage titlescreen&
 
-    FreeFont bigfont&
-    FreeFont smallfont&
-    FreeFont middlefont&
+    _FreeFont bigfont&
+    _FreeFont smallfont&
+    _FreeFont middlefont&
 
-    SndClose music&
-    SndClose sndconfirm&
-    SndClose selectsnd&
-    SndClose sndwin&
-    SndClose sndgameover&
+    _SndClose music&
+    _SndClose sndconfirm&
+    _SndClose selectsnd&
+    _SndClose sndwin&
+    _SndClose sndgameover&
 End Sub
 
 
